@@ -2,6 +2,8 @@
 
 A modern, full-stack blogging platform built with **Next.js 14**, **Supabase**, and **Google Gemini AI**. Built as part of the Hivon Automations internship assignment.
 
+🚀 **Live Demo:** [https://hivon-blush.vercel.app/](https://hivon-blush.vercel.app/)
+
 ---
 
 ## Tech Stack

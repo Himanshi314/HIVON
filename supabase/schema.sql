@@ -1,14 +1,6 @@
--- ============================================================
--- Hivon Blog — Supabase Database Schema
--- Run this in: Supabase Dashboard → SQL Editor
--- ============================================================
-
--- ─── Enable UUID extension ───────────────────────────────
 create extension if not exists "uuid-ossp";
 
 
--- ─── PROFILES TABLE ──────────────────────────────────────
--- Extends Supabase Auth users with role + display name
 create table public.profiles (
   id          uuid references auth.users(id) on delete cascade primary key,
   name        text not null,
@@ -19,7 +11,6 @@ create table public.profiles (
   created_at  timestamptz not null default now()
 );
 
--- Auto-create a profile when a new user signs up
 create or replace function public.handle_new_user()
 returns trigger
 language plpgsql
@@ -42,7 +33,6 @@ create trigger on_auth_user_created
   for each row execute procedure public.handle_new_user();
 
 
--- ─── POSTS TABLE ─────────────────────────────────────────
 create table public.posts (
   id           uuid primary key default uuid_generate_v4(),
   title        text not null,
@@ -50,7 +40,7 @@ create table public.posts (
   body         text not null,
   image_url    text,
   author_id    uuid not null references public.profiles(id) on delete cascade,
-  summary      text,                      -- AI-generated, stored once
+  summary      text,
   tags         text[] default '{}',
   reading_time integer default 1,
   published    boolean not null default true,
@@ -58,7 +48,6 @@ create table public.posts (
   updated_at   timestamptz not null default now()
 );
 
--- Auto-update updated_at on edit
 create or replace function public.update_updated_at()
 returns trigger language plpgsql as $$
 begin
@@ -71,13 +60,11 @@ create trigger posts_updated_at
   before update on public.posts
   for each row execute procedure public.update_updated_at();
 
--- Index for search and ordering
 create index posts_created_at_idx on public.posts(created_at desc);
 create index posts_author_id_idx on public.posts(author_id);
 create index posts_slug_idx on public.posts(slug);
 create index posts_published_idx on public.posts(published);
 
--- Full-text search index
 alter table public.posts
   add column fts tsvector
     generated always as (
@@ -87,7 +74,6 @@ alter table public.posts
 create index posts_fts_idx on public.posts using gin(fts);
 
 
--- ─── COMMENTS TABLE ──────────────────────────────────────
 create table public.comments (
   id            uuid primary key default uuid_generate_v4(),
   post_id       uuid not null references public.posts(id) on delete cascade,
@@ -99,16 +85,11 @@ create table public.comments (
 create index comments_post_id_idx on public.comments(post_id);
 
 
--- ─── ROW LEVEL SECURITY (RLS) ────────────────────────────
--- This enforces access control at the DATABASE level.
--- Even if someone bypasses the UI, the DB won't let them in.
-
 alter table public.profiles enable row level security;
 alter table public.posts     enable row level security;
 alter table public.comments  enable row level security;
 
 
--- Helper: get the current user's role
 create or replace function public.get_my_role()
 returns text
 language sql
@@ -119,7 +100,6 @@ as $$
 $$;
 
 
--- ── PROFILES policies ──
 create policy "Public profiles are viewable by everyone"
   on public.profiles for select using (true);
 
@@ -132,7 +112,6 @@ create policy "Admin can update any profile"
   using (get_my_role() = 'admin');
 
 
--- ── POSTS policies ──
 create policy "Published posts are viewable by everyone"
   on public.posts for select
   using (published = true);
@@ -165,7 +144,6 @@ create policy "Admins can delete any post"
   using (get_my_role() = 'admin');
 
 
--- ── COMMENTS policies ──
 create policy "Comments are viewable by everyone"
   on public.comments for select using (true);
 
@@ -181,10 +159,6 @@ create policy "Admins can delete any comment"
   on public.comments for delete
   using (get_my_role() = 'admin');
 
-
--- ─── STORAGE BUCKET for post images ─────────────────────
--- Run this separately in Supabase Dashboard → Storage → New Bucket
--- OR paste this into SQL Editor:
 
 insert into storage.buckets (id, name, public)
 values ('post-images', 'post-images', true);

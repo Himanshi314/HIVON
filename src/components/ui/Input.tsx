@@ -1,4 +1,3 @@
-// src/components/ui/Input.tsx
 import { cn } from '@/lib/utils'
 import { type InputHTMLAttributes, forwardRef } from 'react'
 
@@ -47,7 +46,6 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 )
 Input.displayName = 'Input'
 
-// ─── Textarea ─────────────────────────────────────────
 interface TextareaProps
   extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string

@@ -1,6 +1,3 @@
-// src/app/posts/page.tsx
-// Server Component — data fetched on the server, no loading flash
-
 import { Suspense } from 'react'
 import { getPosts, getAllTags } from '@/lib/posts'
 import { PostCard } from '@/components/posts/PostCard'
@@ -34,7 +31,6 @@ export default async function PostsPage({ searchParams }: PageProps) {
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 animate-fade-in">
-      {/* Page header */}
       <div className="mb-10">
         <h1 className="font-serif text-4xl text-foreground mb-2">Blog</h1>
         <p className="text-muted-foreground text-sm">
@@ -44,14 +40,12 @@ export default async function PostsPage({ searchParams }: PageProps) {
         </p>
       </div>
 
-      {/* Controls */}
       <div className="flex flex-col sm:flex-row gap-4 mb-8">
         <Suspense>
           <SearchBar />
         </Suspense>
       </div>
 
-      {/* Tag pills */}
       {tags.length > 0 && (
         <div className="mb-8">
           <Suspense>
@@ -60,7 +54,6 @@ export default async function PostsPage({ searchParams }: PageProps) {
         </div>
       )}
 
-      {/* Post grid */}
       {posts.length === 0 ? (
         <EmptyState hasFilters={hasFilters} search={search} tag={tag} />
       ) : (

@@ -1,4 +1,3 @@
-// src/components/ui/Badge.tsx
 import { cn } from '@/lib/utils'
 import type { UserRole } from '@/types'
 
@@ -31,7 +30,6 @@ export function Badge({ children, variant = 'default', className }: BadgeProps) 
   )
 }
 
-// Role badge with appropriate color per role
 export function RoleBadge({ role }: { role: UserRole }) {
   const config = {
     admin: { label: 'Admin', variant: 'destructive' as const },

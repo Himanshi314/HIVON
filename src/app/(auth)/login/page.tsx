@@ -1,4 +1,3 @@
-// src/app/(auth)/login/page.tsx
 'use client'
 
 import { useState } from 'react'
@@ -61,15 +60,12 @@ export default function LoginPage() {
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 animate-fade-in">
       <div className="w-full max-w-sm">
-        {/* Header */}
         <div className="text-center mb-8">
           <h1 className="font-serif text-3xl text-foreground mb-2">Welcome back</h1>
           <p className="text-muted-foreground text-sm">Sign in to your Hivon account</p>
         </div>
 
-        {/* Card */}
         <div className="bg-card border border-border rounded-2xl p-6 shadow-sm">
-          {/* Google OAuth */}
           <button
             onClick={handleGoogleLogin}
             className="w-full flex items-center justify-center gap-3 h-10 border border-border rounded-lg text-sm font-medium hover:bg-muted transition-colors mb-5"
@@ -92,7 +88,6 @@ export default function LoginPage() {
             </div>
           </div>
 
-          {/* Form */}
           <form onSubmit={handleLogin} className="flex flex-col gap-4">
             <Input
               label="Email"

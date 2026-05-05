@@ -1,4 +1,3 @@
-// src/components/posts/CommentsSection.tsx
 'use client'
 
 import { useState } from 'react'
@@ -41,7 +40,7 @@ export function CommentsSection({ postId, initialComments }: CommentsSectionProp
     if (error) {
       toast.error('Failed to post comment. Please try again.')
     } else {
-      setComments((prev) => [...prev, data as Comment])
+      setComments((prev) => [...prev, data as unknown as Comment])
       setText('')
       toast.success('Comment posted!')
     }
@@ -67,7 +66,6 @@ export function CommentsSection({ postId, initialComments }: CommentsSectionProp
 
   return (
     <section className="mt-14 pt-10 border-t border-border">
-      {/* Header */}
       <div className="flex items-center gap-2.5 mb-8">
         <MessageCircle size={20} className="text-foreground" />
         <h2 className="text-lg font-semibold text-foreground">
@@ -75,7 +73,6 @@ export function CommentsSection({ postId, initialComments }: CommentsSectionProp
         </h2>
       </div>
 
-      {/* Comment list */}
       {comments.length > 0 ? (
         <div className="flex flex-col gap-5 mb-10">
           {comments.map((comment) => (
@@ -94,7 +91,6 @@ export function CommentsSection({ postId, initialComments }: CommentsSectionProp
         </div>
       )}
 
-      {/* Comment form */}
       {user ? (
         <form onSubmit={handleSubmit} className="bg-card border border-border rounded-xl p-5">
           <div className="flex items-center gap-2.5 mb-4">
@@ -155,7 +151,6 @@ export function CommentsSection({ postId, initialComments }: CommentsSectionProp
   )
 }
 
-// ── Single comment ────────────────────────────────────────
 function CommentItem({
   comment,
   canDelete,
@@ -167,7 +162,6 @@ function CommentItem({
 }) {
   return (
     <div className="flex gap-3 group">
-      {/* Avatar */}
       <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center text-foreground text-sm font-semibold flex-shrink-0 mt-0.5">
         {comment.author?.name?.charAt(0).toUpperCase() ?? '?'}
       </div>

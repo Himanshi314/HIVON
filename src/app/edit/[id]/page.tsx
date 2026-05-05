@@ -1,4 +1,3 @@
-// src/app/edit/[id]/page.tsx
 'use client'
 
 import { useEffect, useState } from 'react'
@@ -33,7 +32,6 @@ export default function EditPostPage() {
   const [saving, setSaving] = useState(false)
   const [deleting, setDeleting] = useState(false)
 
-  // Load post
   useEffect(() => {
     if (authLoading) return
     if (!user) { router.replace('/login'); return }
@@ -47,7 +45,6 @@ export default function EditPostPage() {
 
       if (error || !data) { toast.error('Post not found'); router.replace('/admin'); return }
 
-      // Only author or admin can edit
       if (data.author_id !== user!.id && !isAdmin) {
         toast.error('You do not have permission to edit this post')
         router.replace('/')
@@ -126,7 +123,6 @@ export default function EditPostPage() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10 animate-fade-in">
-      {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-3">
           <Link
@@ -166,7 +162,6 @@ export default function EditPostPage() {
       </div>
 
       <div className="grid lg:grid-cols-[1fr_300px] gap-8 items-start">
-        {/* Main */}
         <div className="space-y-6">
           <Input
             label="Title"
@@ -184,11 +179,9 @@ export default function EditPostPage() {
           </div>
         </div>
 
-        {/* Sidebar */}
         <div className="space-y-5 lg:sticky lg:top-20">
           <AISuggestions title={title} body={body} onSelectTitle={setTitle} onSelectTags={setTags} />
 
-          {/* Publish toggle */}
           <div className="rounded-xl border border-border p-4">
             <h3 className="text-sm font-semibold text-foreground mb-3">Visibility</h3>
             <button
@@ -206,7 +199,6 @@ export default function EditPostPage() {
             </button>
           </div>
 
-          {/* Tags */}
           <div className="rounded-xl border border-border p-4 space-y-3">
             <h3 className="text-sm font-semibold text-foreground">Tags</h3>
             <div className="flex flex-wrap gap-1.5">

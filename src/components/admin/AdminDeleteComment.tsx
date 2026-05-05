@@ -1,4 +1,3 @@
-// src/components/admin/AdminDeleteComment.tsx
 'use client'
 
 import { useState } from 'react'

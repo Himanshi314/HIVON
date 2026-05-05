@@ -1,4 +1,3 @@
-// src/components/layout/Navbar.tsx
 'use client'
 
 import Link from 'next/link'
@@ -65,7 +64,6 @@ export function Navbar() {
       )}
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-        {/* Logo */}
         <Link
           href="/"
           className="font-serif text-xl text-foreground hover:opacity-80 transition-opacity"
@@ -73,7 +71,6 @@ export function Navbar() {
           Hivon<span className="text-primary">.</span>
         </Link>
 
-        {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-1">
           {navLinks.map((link) => (
             <Link
@@ -91,9 +88,7 @@ export function Navbar() {
           ))}
         </nav>
 
-        {/* Right side actions */}
         <div className="flex items-center gap-2">
-          {/* Dark mode toggle */}
           {mounted && (
             <button
               onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
@@ -106,7 +101,6 @@ export function Navbar() {
 
           {user ? (
             <div className="hidden md:flex items-center gap-2">
-              {/* Write button */}
               {isAuthor && (
                 <Link
                   href="/create"
@@ -117,13 +111,11 @@ export function Navbar() {
                 </Link>
               )}
 
-              {/* User menu */}
               <div className="relative group">
                 <button className="w-9 h-9 rounded-full bg-primary/10 text-primary text-sm font-medium flex items-center justify-center hover:bg-primary/20 transition-colors">
                   {profile?.name?.charAt(0).toUpperCase() || '?'}
                 </button>
 
-                {/* Dropdown */}
                 <div className="absolute right-0 top-full mt-2 w-52 bg-card border border-border rounded-xl shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50">
                   <div className="px-3 py-2 border-b border-border">
                     <p className="text-sm font-medium truncate">{profile?.name}</p>
@@ -165,7 +157,6 @@ export function Navbar() {
             </div>
           )}
 
-          {/* Mobile hamburger */}
           <button
             className="md:hidden w-9 h-9 flex items-center justify-center rounded-md text-muted-foreground hover:bg-muted transition-colors"
             onClick={() => setMobileOpen(!mobileOpen)}
@@ -176,7 +167,6 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile menu */}
       {mobileOpen && (
         <div className="md:hidden border-t border-border bg-background px-4 py-3 flex flex-col gap-1">
           {navLinks.map((link) => (

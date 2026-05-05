@@ -1,4 +1,3 @@
-// src/app/posts/[slug]/not-found.tsx
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 

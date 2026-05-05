@@ -1,7 +1,3 @@
-// src/hooks/useUser.ts
-// Custom hook to get the current user + their profile (role, name, etc.)
-// Use this in any Client Component that needs auth state
-
 'use client'
 
 import { useEffect, useState } from 'react'
@@ -24,7 +20,6 @@ export function useUser(): UseUserReturn {
   const supabase = createClient()
 
   useEffect(() => {
-    // Get initial session
     supabase.auth.getUser().then(async ({ data: { user } }) => {
       setUser(user)
 
@@ -40,7 +35,6 @@ export function useUser(): UseUserReturn {
       setLoading(false)
     })
 
-    // Listen for auth state changes (login, logout, token refresh)
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (_event, session) => {

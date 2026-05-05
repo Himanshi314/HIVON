@@ -1,12 +1,8 @@
-// src/lib/posts.ts
-// All post DB queries — single source of truth. No raw Supabase in components.
-
 import { createClient } from '@/lib/supabase/server'
 import type { Post, Comment, PaginatedResult } from '@/types'
 
 const PAGE_SIZE = 6
 
-// ─── Paginated post listing ───────────────────────────────
 export async function getPosts({
   page = 1,
   search = '',
@@ -49,7 +45,7 @@ export async function getPosts({
   }
 
   return {
-    data: (data as Post[]) ?? [],
+    data: (data as unknown as Post[]) ?? [],
     count: count ?? 0,
     page,
     pageSize: PAGE_SIZE,
@@ -57,7 +53,6 @@ export async function getPosts({
   }
 }
 
-// ─── Single post by slug ──────────────────────────────────
 export async function getPostBySlug(slug: string): Promise<Post | null> {
   const supabase = await createClient()
   const { data, error } = await supabase
@@ -68,10 +63,9 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
     .single()
 
   if (error || !data) return null
-  return data as Post
+  return data as unknown as Post
 }
 
-// ─── Single post by ID (edit page) ───────────────────────
 export async function getPostById(id: string): Promise<Post | null> {
   const supabase = await createClient()
   const { data, error } = await supabase
@@ -81,10 +75,9 @@ export async function getPostById(id: string): Promise<Post | null> {
     .single()
 
   if (error || !data) return null
-  return data as Post
+  return data as unknown as Post
 }
 
-// ─── Author's own posts ───────────────────────────────────
 export async function getPostsByAuthor(authorId: string): Promise<Post[]> {
   const supabase = await createClient()
   const { data, error } = await supabase
@@ -94,10 +87,9 @@ export async function getPostsByAuthor(authorId: string): Promise<Post[]> {
     .order('created_at', { ascending: false })
 
   if (error) return []
-  return (data as Post[]) ?? []
+  return (data as unknown as Post[]) ?? []
 }
 
-// ─── All unique tags ──────────────────────────────────────
 export async function getAllTags(): Promise<string[]> {
   const supabase = await createClient()
   const { data } = await supabase
@@ -113,7 +105,6 @@ export async function getAllTags(): Promise<string[]> {
   return Array.from(tagSet).sort()
 }
 
-// ─── Comments for a post ─────────────────────────────────
 export async function getComments(postId: string): Promise<Comment[]> {
   const supabase = await createClient()
   const { data, error } = await supabase
@@ -126,5 +117,5 @@ export async function getComments(postId: string): Promise<Comment[]> {
     .order('created_at', { ascending: true })
 
   if (error) return []
-  return (data as Comment[]) ?? []
+  return (data as unknown as Comment[]) ?? []
 }

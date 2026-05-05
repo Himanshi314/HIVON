@@ -1,6 +1,3 @@
-// src/app/page.tsx
-// Homepage — shows hero + latest 3 posts from DB
-
 import Link from 'next/link'
 import { ArrowRight, Zap, Shield, PenLine } from 'lucide-react'
 import { getPosts } from '@/lib/posts'
@@ -12,7 +9,6 @@ export default async function HomePage() {
 
   return (
     <div className="animate-fade-in">
-      {/* ── Hero ─────────────────────────────────────────── */}
       <section className="relative max-w-6xl mx-auto px-4 sm:px-6 pt-20 pb-20 text-center">
         <div
           aria-hidden
@@ -52,7 +48,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── Features strip ───────────────────────────────── */}
       <section className="border-y border-border bg-muted/30">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 grid sm:grid-cols-3 gap-8">
           {[
@@ -85,7 +80,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── Latest posts ─────────────────────────────────── */}
       {preview.length > 0 && (
         <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16">
           <div className="flex items-center justify-between mb-8">
@@ -107,7 +101,6 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* ── CTA ──────────────────────────────────────────── */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 pb-20">
         <div className="rounded-2xl bg-primary/5 border border-primary/15 p-10 text-center">
           <h2 className="font-serif text-3xl text-foreground mb-3">

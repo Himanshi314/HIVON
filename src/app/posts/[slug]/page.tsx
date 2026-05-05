@@ -1,6 +1,3 @@
-// src/app/posts/[slug]/page.tsx
-// Individual post page with full content, AI summary, and comments
-
 import { notFound } from 'next/navigation'
 import { getPostBySlug, getAllTags, getComments } from '@/lib/posts'
 import { CommentsSection } from '@/components/posts/CommentsSection'
@@ -23,7 +20,6 @@ interface PageProps {
   params: Promise<{ slug: string }>
 }
 
-// Dynamic SEO metadata per post
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
   const post = await getPostBySlug(slug)
@@ -45,7 +41,6 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 export default async function PostPage({ params }: PageProps) {
   const { slug } = await params
 
-  // Fetch post + comments in parallel
   const post = await getPostBySlug(slug)
   if (!post) notFound()
 
@@ -54,7 +49,6 @@ export default async function PostPage({ params }: PageProps) {
     createClient(),
   ])
 
-  // Get current user to show Edit button
   const { data: { user } } = await supabase.auth.getUser()
   let currentProfile = null
   if (user) {
@@ -75,7 +69,6 @@ export default async function PostPage({ params }: PageProps) {
 
   return (
     <article className="animate-fade-in">
-      {/* Breadcrumb */}
       <div className="max-w-3xl mx-auto px-4 sm:px-6 pt-10 pb-0">
         <Link
           href="/posts"
@@ -85,7 +78,6 @@ export default async function PostPage({ params }: PageProps) {
           All posts
         </Link>
 
-        {/* Tags */}
         {post.tags && post.tags.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mb-5">
             {post.tags.map((tag) => (
@@ -98,14 +90,11 @@ export default async function PostPage({ params }: PageProps) {
           </div>
         )}
 
-        {/* Title */}
         <h1 className="font-serif text-3xl sm:text-4xl lg:text-5xl text-foreground leading-tight mb-6">
           {post.title}
         </h1>
 
-        {/* Meta bar */}
         <div className="flex flex-wrap items-center gap-4 mb-8 pb-8 border-b border-border">
-          {/* Author */}
           <div className="flex items-center gap-2.5">
             <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold">
               {authorInitial}
@@ -130,7 +119,6 @@ export default async function PostPage({ params }: PageProps) {
             </div>
           </div>
 
-          {/* Edit button */}
           {canEdit && (
             <Link
               href={`/edit/${post.id}`}
@@ -143,7 +131,6 @@ export default async function PostPage({ params }: PageProps) {
         </div>
       </div>
 
-      {/* Hero image */}
       {post.image_url && (
         <div className="max-w-4xl mx-auto px-4 sm:px-6 mb-10">
           <div className="relative aspect-[16/7] rounded-2xl overflow-hidden shadow-md">
@@ -160,7 +147,6 @@ export default async function PostPage({ params }: PageProps) {
       )}
 
       <div className="max-w-3xl mx-auto px-4 sm:px-6 pb-20">
-        {/* AI Summary box */}
         {post.summary && (
           <div className="mb-10 p-5 rounded-xl border border-primary/20 bg-primary/5">
             <div className="flex items-center gap-2 mb-3">
@@ -174,13 +160,11 @@ export default async function PostPage({ params }: PageProps) {
           </div>
         )}
 
-        {/* Post body — rendered HTML from Tiptap */}
         <div
           className="prose-blog"
           dangerouslySetInnerHTML={{ __html: post.body }}
         />
 
-        {/* Comments */}
         <CommentsSection postId={post.id} initialComments={comments} />
       </div>
     </article>

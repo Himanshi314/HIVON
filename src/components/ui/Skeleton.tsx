@@ -1,8 +1,7 @@
-// src/components/ui/Skeleton.tsx
 import { cn } from '@/lib/utils'
 
-export function Skeleton({ className }: { className?: string }) {
-  return <div className={cn('animate-pulse rounded-md bg-muted', className)} />
+export function Skeleton({ className, style }: { className?: string; style?: React.CSSProperties }) {
+  return <div className={cn('animate-pulse rounded-md bg-muted', className)} style={style} />
 }
 
 export function PostCardSkeleton({ featured = false }: { featured?: boolean }) {

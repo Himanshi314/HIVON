@@ -1,12 +1,9 @@
-/* src/app/globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ─── Design tokens ───────────────────────────────────── */
 @layer base {
   :root {
-    /* Colors — light mode */
     --background: 0 0% 98%;
     --foreground: 0 0% 8%;
     --card: 0 0% 100%;
@@ -22,14 +19,11 @@
     --destructive: 0 84% 60%;
     --ring: 220 90% 54%;
 
-    /* Typography */
     --font-sans: 'DM Sans', sans-serif;
     --font-serif: 'DM Serif Display', serif;
 
-    /* Radius */
     --radius: 0.625rem;
 
-    /* Toast */
     --toast-bg: #ffffff;
     --toast-fg: #111111;
     --toast-border: #e5e5e5;
@@ -67,19 +61,16 @@
   }
 }
 
-/* ─── Utility classes ─────────────────────────────────── */
 @layer utilities {
   .font-serif {
     font-family: var(--font-serif);
   }
 
-  /* Smooth color transitions (on theme switch) */
   .transition-colors-smooth {
     transition: background-color 0.2s ease, color 0.2s ease,
       border-color 0.2s ease;
   }
 
-  /* Prose styles for blog post body content */
   .prose-blog {
     @apply prose prose-neutral dark:prose-invert max-w-none
       prose-headings:font-serif prose-headings:font-normal
@@ -89,7 +80,6 @@
   }
 }
 
-/* ─── Scrollbar ───────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -105,7 +95,6 @@
   background: hsl(var(--muted-foreground) / 0.5);
 }
 
-/* ─── Tiptap editor ───────────────────────────────────── */
 .tiptap {
   outline: none;
   min-height: 300px;
@@ -135,7 +124,6 @@
 .tiptap pre code { background: none; padding: 0; }
 .tiptap img { border-radius: 8px; max-width: 100%; }
 
-/* ─── Page transition ─────────────────────────────────── */
 @keyframes fade-in {
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }

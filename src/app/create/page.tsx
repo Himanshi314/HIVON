@@ -1,4 +1,3 @@
-// src/app/create/page.tsx
 'use client'
 
 import { useState } from 'react'
@@ -27,7 +26,6 @@ export default function CreatePostPage() {
   const [publishing, setPublishing] = useState(false)
   const [savingDraft, setSavingDraft] = useState(false)
 
-  // Redirect if not author
   if (!loading && (!user || !isAuthor)) {
     router.replace('/login')
     return null
@@ -56,7 +54,6 @@ export default function CreatePostPage() {
       const slug = generateSlug(title)
       const readingTime = getReadingTime(body)
 
-      // 1. Insert post without summary first (fast)
       const { data: post, error: postError } = await supabase
         .from('posts')
         .insert({
@@ -81,14 +78,12 @@ export default function CreatePostPage() {
         return
       }
 
-      // 2. Generate AI summary in background via API route
-      //    (non-blocking — user gets redirected immediately)
       if (publish) {
         fetch('/api/ai/summary', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ action: 'summary', postId: post.id, title: title.trim(), body }),
-        }).catch(() => {/* silent — summary will just be empty */})
+        }).catch(() => {})
       }
 
       toast.success(publish ? '🎉 Post published!' : 'Draft saved!')
@@ -105,7 +100,6 @@ export default function CreatePostPage() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-10 animate-fade-in">
-      {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div>
           <h1 className="font-serif text-3xl text-foreground">New post</h1>
@@ -140,7 +134,6 @@ export default function CreatePostPage() {
       </div>
 
       <div className="grid lg:grid-cols-[1fr_300px] gap-8 items-start">
-        {/* Main column */}
         <div className="space-y-6">
           <Input
             label="Title"
@@ -173,9 +166,7 @@ export default function CreatePostPage() {
           </div>
         </div>
 
-        {/* Sidebar */}
         <div className="space-y-5 lg:sticky lg:top-20">
-          {/* AI assistant */}
           <AISuggestions
             title={title}
             body={body}
@@ -183,7 +174,6 @@ export default function CreatePostPage() {
             onSelectTags={setTags}
           />
 
-          {/* Tags */}
           <div className="rounded-xl border border-border p-4 space-y-3">
             <h3 className="text-sm font-semibold text-foreground">Tags</h3>
             <div className="flex flex-wrap gap-1.5">
@@ -219,7 +209,6 @@ export default function CreatePostPage() {
             <p className="text-[10px] text-muted-foreground">{tags.length}/5 tags · Press Enter or comma to add</p>
           </div>
 
-          {/* Slug preview */}
           {title && (
             <div className="rounded-xl border border-border p-4">
               <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-1">URL Slug</h3>
@@ -229,7 +218,6 @@ export default function CreatePostPage() {
             </div>
           )}
 
-          {/* Publish actions (mobile sticky) */}
           <div className="rounded-xl border border-border p-4 space-y-2">
             <h3 className="text-sm font-semibold text-foreground mb-3">Publish</h3>
             <Button

@@ -1,21 +1,12 @@
-// src/lib/gemini.ts
-// Google Gemini AI integration
-// Handles summary generation, tag suggestions, and title improvements
-
 import { GoogleGenerativeAI } from '@google/generative-ai'
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!)
-const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' }) // Free tier
+const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' })
 
-/**
- * Generate a ~200-word summary for a blog post.
- * Called ONCE on post creation and stored in DB — never repeated.
- */
 export async function generatePostSummary(
   title: string,
   body: string
 ): Promise<string> {
-  // Strip HTML tags from body before sending to AI
   const plainBody = body.replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim()
 
   const prompt = `You are a professional blog editor. Write a concise, engaging summary of the following blog post in approximately 200 words. 
@@ -39,10 +30,6 @@ Write only the summary, no additional commentary.`
   return response.text().trim()
 }
 
-/**
- * Suggest relevant tags for a blog post.
- * Returns an array of 3-5 lowercase tags.
- */
 export async function suggestTags(
   title: string,
   body: string
@@ -59,7 +46,6 @@ Content: ${plainBody.slice(0, 1000)}`
   try {
     const result = await model.generateContent(prompt)
     const text = result.response.text().trim()
-    // Strip markdown code blocks if present
     const cleaned = text.replace(/```json|```/g, '').trim()
     return JSON.parse(cleaned)
   } catch {
@@ -67,9 +53,6 @@ Content: ${plainBody.slice(0, 1000)}`
   }
 }
 
-/**
- * Suggest 3 improved title alternatives for a blog post.
- */
 export async function suggestTitles(
   currentTitle: string,
   body: string

@@ -1,4 +1,3 @@
-// src/app/(auth)/signup/page.tsx
 'use client'
 
 import { useState } from 'react'
@@ -55,7 +54,6 @@ export default function SignupPage() {
       return
     }
 
-    // Update the role in profiles (the trigger creates the row as 'viewer' by default)
     if (data.user) {
       await supabase
         .from('profiles')
@@ -100,7 +98,6 @@ export default function SignupPage() {
         </div>
 
         <div className="bg-card border border-border rounded-2xl p-6 shadow-sm">
-          {/* Google */}
           <button
             onClick={handleGoogleSignup}
             className="w-full flex items-center justify-center gap-3 h-10 border border-border rounded-lg text-sm font-medium hover:bg-muted transition-colors mb-5"
@@ -164,7 +161,6 @@ export default function SignupPage() {
               </button>
             </div>
 
-            {/* Role selector */}
             <div>
               <p className="text-sm font-medium text-foreground mb-2">I want to</p>
               <div className="grid grid-cols-2 gap-2">

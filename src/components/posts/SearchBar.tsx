@@ -1,4 +1,3 @@
-// src/components/posts/SearchBar.tsx
 'use client'
 
 import { useState, useTransition, useCallback } from 'react'
@@ -29,7 +28,6 @@ export function SearchBar() {
 
   return (
     <div className="relative w-full max-w-sm">
-      {/* Leading icon */}
       {isPending ? (
         <Loader2 size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-primary animate-spin" />
       ) : (
@@ -52,7 +50,6 @@ export function SearchBar() {
         )}
       />
 
-      {/* Clear button */}
       {query && (
         <button
           onClick={() => { setQuery(''); push('') }}

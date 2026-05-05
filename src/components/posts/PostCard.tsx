@@ -1,4 +1,3 @@
-// src/components/posts/PostCard.tsx
 'use client'
 
 import Link from 'next/link'
@@ -17,14 +16,12 @@ export function PostCard({ post, featured = false }: PostCardProps) {
   const authorName = post.author?.name ?? 'Anonymous'
   const initial = authorName.charAt(0).toUpperCase()
 
-  // ── Featured (hero) card ─────────────────────────────
   if (featured) {
     return (
       <Link
         href={`/posts/${post.slug}`}
         className="group col-span-full grid md:grid-cols-2 rounded-2xl border border-border bg-card overflow-hidden hover:shadow-xl transition-all duration-300"
       >
-        {/* Image side */}
         <div className="relative aspect-[16/10] md:aspect-auto min-h-[280px] overflow-hidden bg-muted">
           {post.image_url ? (
             <Image
@@ -43,7 +40,6 @@ export function PostCard({ post, featured = false }: PostCardProps) {
           </span>
         </div>
 
-        {/* Content side */}
         <div className="flex flex-col justify-between p-7 lg:p-10">
           <div>
             <TagList tags={post.tags} limit={3} />
@@ -60,7 +56,6 @@ export function PostCard({ post, featured = false }: PostCardProps) {
     )
   }
 
-  // ── Standard card ────────────────────────────────────
   return (
     <Link
       href={`/posts/${post.slug}`}
@@ -96,7 +91,6 @@ export function PostCard({ post, featured = false }: PostCardProps) {
   )
 }
 
-// ── Sub-components ───────────────────────────────────────
 
 function PlaceholderImage({ title }: { title: string }) {
   return (

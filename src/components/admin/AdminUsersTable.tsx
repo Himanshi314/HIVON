@@ -1,4 +1,3 @@
-// src/components/admin/AdminUsersTable.tsx
 'use client'
 
 import { useState } from 'react'

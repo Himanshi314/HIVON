@@ -1,4 +1,3 @@
-// src/components/admin/AdminPostsTable.tsx
 'use client'
 
 import { useState } from 'react'

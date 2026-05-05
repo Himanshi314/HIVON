@@ -1,6 +1,3 @@
-// src/types/index.ts
-// Central type definitions for the entire Hivon Blog platform
-
 export type UserRole = 'viewer' | 'author' | 'admin'
 
 export interface Profile {
@@ -25,7 +22,6 @@ export interface Post {
   published: boolean
   created_at: string
   updated_at: string
-  // Joined fields
   author?: Profile
   comment_count?: number
 }
@@ -36,7 +32,6 @@ export interface Comment {
   user_id: string
   comment_text: string
   created_at: string
-  // Joined fields
   author?: Profile
 }
 

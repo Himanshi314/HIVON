@@ -1,4 +1,3 @@
-// src/components/editor/AISuggestions.tsx
 'use client'
 
 import { useState } from 'react'
@@ -75,7 +74,6 @@ export function AISuggestions({ title, body, onSelectTitle, onSelectTags }: AISu
 
   return (
     <div className="rounded-xl border border-primary/20 bg-primary/5 overflow-hidden">
-      {/* Header */}
       <button
         type="button"
         onClick={() => setOpen(!open)}
@@ -91,7 +89,6 @@ export function AISuggestions({ title, body, onSelectTitle, onSelectTags }: AISu
 
       {open && (
         <div className="px-4 pb-4 border-t border-primary/10 space-y-5 pt-4">
-          {/* Title suggestions */}
           <div>
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-1.5">
@@ -129,7 +126,6 @@ export function AISuggestions({ title, body, onSelectTitle, onSelectTags }: AISu
             )}
           </div>
 
-          {/* Tag suggestions */}
           <div>
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-1.5">

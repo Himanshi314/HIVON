@@ -1,8 +1,3 @@
-// src/app/admin/page.tsx
-// Admin dashboard — server rendered, admin-only
-// FIX: moved AdminDeleteComment import to top (was at bottom — invalid module)
-// FIX: replaced `any` with typed CommentRow interface
-
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { formatDate } from '@/lib/utils'
@@ -11,6 +6,7 @@ import { AdminUsersTable } from '@/components/admin/AdminUsersTable'
 import { AdminDeleteComment } from '@/components/admin/AdminDeleteComment'
 import { LayoutDashboard, FileText, Users, MessageCircle, TrendingUp } from 'lucide-react'
 import type { Metadata } from 'next'
+import type { Post } from '@/types'
 
 export const metadata: Metadata = { title: 'Admin Dashboard' }
 
@@ -95,7 +91,8 @@ export default async function AdminPage() {
         <h2 className="text-base font-semibold text-foreground mb-4 flex items-center gap-2">
           <FileText size={16} /> All Posts
         </h2>
-        <AdminPostsTable posts={posts ?? []} currentUserId={user.id} />
+        {/* Supabase returns joined `author` as an array; cast via unknown */}
+        <AdminPostsTable posts={(posts ?? []) as unknown as Post[]} currentUserId={user.id} />
       </section>
 
       <section className="mb-10">
@@ -107,7 +104,7 @@ export default async function AdminPage() {
             <div className="py-10 text-center text-sm text-muted-foreground">No comments yet</div>
           ) : (
             <div className="divide-y divide-border">
-              {(recentComments as CommentRow[]).map((c) => (
+              {(recentComments as unknown as CommentRow[]).map((c) => (
                 <div key={c.id} className="px-5 py-4 flex items-start justify-between gap-4 hover:bg-muted/30 transition-colors">
                   <div className="flex-1 min-w-0">
                     <p className="text-sm text-foreground line-clamp-2">{c.comment_text}</p>

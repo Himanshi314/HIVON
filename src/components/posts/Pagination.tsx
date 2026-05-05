@@ -1,4 +1,3 @@
-// src/components/posts/Pagination.tsx
 'use client'
 
 import Link from 'next/link'
@@ -22,9 +21,8 @@ export function Pagination({ currentPage, totalPages }: PaginationProps) {
 
   if (totalPages <= 1) return null
 
-  // Build page window
   const pages: (number | '…')[] = []
-  const delta = 1 // pages on each side of current
+  const delta = 1
 
   const left = Math.max(2, currentPage - delta)
   const right = Math.min(totalPages - 1, currentPage + delta)
@@ -43,7 +41,6 @@ export function Pagination({ currentPage, totalPages }: PaginationProps) {
       aria-label="Pagination"
       className="flex items-center justify-center gap-1 mt-12"
     >
-      {/* Prev */}
       {currentPage > 1 ? (
         <Link
           href={buildHref(currentPage - 1)}
@@ -59,7 +56,6 @@ export function Pagination({ currentPage, totalPages }: PaginationProps) {
         </span>
       )}
 
-      {/* Pages */}
       {pages.map((p, i) =>
         p === '…' ? (
           <span key={`ellipsis-${i}`} className={cn(btnBase, 'text-muted-foreground')}>
@@ -82,7 +78,6 @@ export function Pagination({ currentPage, totalPages }: PaginationProps) {
         )
       )}
 
-      {/* Next */}
       {currentPage < totalPages ? (
         <Link
           href={buildHref(currentPage + 1)}

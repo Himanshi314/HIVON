@@ -1,4 +1,3 @@
-// src/components/editor/RichTextEditor.tsx
 'use client'
 
 import { useEditor, EditorContent } from '@tiptap/react'
@@ -84,7 +83,6 @@ export function RichTextEditor({ content, onChange, placeholder = 'Write your st
 
   return (
     <div className="border border-border rounded-xl overflow-hidden focus-within:ring-2 focus-within:ring-primary/30 focus-within:border-primary transition-all">
-      {/* Toolbar */}
       <div className="flex flex-wrap items-center gap-0.5 px-3 py-2 border-b border-border bg-muted/30">
         <ToolbarBtn onClick={() => editor.chain().focus().undo().run()} title="Undo"><Undo size={14} /></ToolbarBtn>
         <ToolbarBtn onClick={() => editor.chain().focus().redo().run()} title="Redo"><Redo size={14} /></ToolbarBtn>
@@ -108,12 +106,10 @@ export function RichTextEditor({ content, onChange, placeholder = 'Write your st
         <ToolbarBtn onClick={addImage} title="Add image"><ImageIcon size={14} /></ToolbarBtn>
       </div>
 
-      {/* Editor area */}
       <div className="bg-background">
         <EditorContent editor={editor} />
       </div>
 
-      {/* Word count */}
       <div className="flex justify-end px-3 py-1.5 border-t border-border bg-muted/20">
         <span className="text-xs text-muted-foreground">{wordCount} words</span>
       </div>

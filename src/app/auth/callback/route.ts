@@ -1,6 +1,3 @@
-// src/app/auth/callback/route.ts
-// Handles the OAuth redirect from Supabase after Google login
-
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
@@ -19,6 +16,5 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  // Something went wrong — redirect to login with error
   return NextResponse.redirect(`${origin}/login?error=auth_callback_failed`)
 }

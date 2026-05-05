@@ -97,14 +97,22 @@ export default function CreatePostPage() {
       }
 
       if (publish) {
-        fetch('/api/ai/summary', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: 'summary', postId: post.id, title: title.trim(), body }),
-        }).catch(() => {})
+        toast.loading('Generating AI summary...', { id: 'summary-toast' })
+        try {
+          const res = await fetch('/api/ai/summary', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'summary', postId: post.id, title: title.trim(), body }),
+          })
+          if (!res.ok) throw new Error('Failed')
+          toast.success('AI summary generated!', { id: 'summary-toast' })
+        } catch {
+          toast.error('Post published, but AI summary failed.', { id: 'summary-toast' })
+        }
+      } else {
+        toast.success('Draft saved!')
       }
 
-      toast.success(publish ? '🎉 Post published!' : 'Draft saved!')
       router.push(publish ? `/posts/${post.slug}` : '/admin')
     } catch (err: unknown) {
       toast.error('Something went wrong. Please try again.')

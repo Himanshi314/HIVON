@@ -40,7 +40,7 @@ export default async function HomePage() {
             <ArrowRight size={16} />
           </Link>
           <Link
-            href="/signup"
+            href="/create"
             className="flex items-center gap-2 px-6 py-3 border border-border text-foreground rounded-lg font-medium hover:bg-muted transition-colors"
           >
             Start writing
@@ -110,10 +110,10 @@ export default async function HomePage() {
             Sign up as an Author and your first post gets an AI summary automatically.
           </p>
           <Link
-            href="/signup"
+            href="/create"
             className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:opacity-90 transition-opacity"
           >
-            Create your account
+            Start writing
             <ArrowRight size={16} />
           </Link>
         </div>

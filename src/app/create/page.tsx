@@ -26,9 +26,27 @@ export default function CreatePostPage() {
   const [publishing, setPublishing] = useState(false)
   const [savingDraft, setSavingDraft] = useState(false)
 
-  if (!loading && (!user || !isAuthor)) {
-    router.replace('/login')
+  if (!loading && !user) {
+    router.replace('/login?redirectTo=/create')
     return null
+  }
+
+  if (!loading && user && !isAuthor) {
+    return (
+      <div className="max-w-xl mx-auto px-4 py-32 text-center animate-fade-in">
+        <p className="text-5xl mb-6">✍️</p>
+        <h1 className="font-serif text-2xl text-foreground mb-3">Author access required</h1>
+        <p className="text-muted-foreground text-sm mb-6">
+          You&apos;re signed in as a <span className="font-semibold">viewer</span>. To write posts, sign up with an Author account.
+        </p>
+        <a
+          href="/signup"
+          className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
+        >
+          Create author account
+        </a>
+      </div>
+    )
   }
 
   function addTag(value: string) {

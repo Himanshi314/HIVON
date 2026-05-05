@@ -16,13 +16,20 @@ returns trigger
 language plpgsql
 security definer set search_path = public
 as $$
+declare
+  _role text := coalesce(new.raw_user_meta_data->>'role', 'viewer');
 begin
+  -- Only allow valid roles; fall back to viewer if tampered
+  if _role not in ('viewer', 'author') then
+    _role := 'viewer';
+  end if;
+
   insert into public.profiles (id, name, email, role)
   values (
     new.id,
     coalesce(new.raw_user_meta_data->>'name', split_part(new.email, '@', 1)),
     new.email,
-    'viewer'
+    _role
   );
   return new;
 end;
